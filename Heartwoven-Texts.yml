@@ -1,0 +1,184 @@
+app:
+  description: AI 驱动的内容生成 Agent，支持图片+文案输入，自动生成更优创作内容，提供个性化推荐与灵感启发，让人机协作自然融入创作过程，打造有温度的社区氛围。
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: advanced-chat
+  name: 心语织造·社区创作助手
+  use_icon_as_answer_icon: true
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/tongyi:0.1.0@a2dd9bb656a2722292e8936f3287d53ba176cfbbe9b8bfafc596d4a2ddd99eb2
+    version: null
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      - .MP4
+      - .MOV
+      - .MPEG
+      - .WEBM
+      allowed_file_types:
+      - image
+      - video
+      allowed_file_upload_methods:
+      - local_file
+      enabled: true
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 1
+    opening_statement: '🌷你好呀，我是「心语织造·社区创作助手」。
+
+      我能理解你的文字与图片，帮你提炼情感与灵感，让创作更自然更动人。
+
+      你可以发给我：
+
+      - 一张照片 + 你的文字草稿；
+
+      - 或一个主题，我帮你生成灵感文案💡。
+
+
+      让我们一起，让表达变得更有温度吧🌿。
+
+      '
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: true
+    text_to_speech:
+      autoPlay: disabled
+      enabled: true
+      language: zh-Hans
+      voice: sambert-zhiqi-v1
+  graph:
+    edges:
+    - data:
+        sourceType: start
+        targetType: llm
+      id: start-llm
+      source: start
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    nodes:
+    - data:
+        selected: false
+        title: START
+        type: start
+        variables: []
+      height: 52
+      id: start
+      position:
+        x: 85.97509851856677
+        y: 282
+      positionAbsolute:
+        x: 85.97509851856677
+        y: 282
+      selected: true
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: null
+        memory:
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: false
+        model:
+          completion_params:
+            stop: []
+          mode: chat
+          name: qwen3-vl-plus
+          provider: langgenius/tongyi/tongyi
+        prompt_template:
+        - id: 9d64dc8a-d32e-49f6-b553-79d9b891580e
+          role: user
+          text: "你是「心语织造·社区创作助手」——温柔细腻的AI内容生成助手。\n\n【核心能力】\n- 分析图片情感，生成配图文案\n- 优化文案语气，提供多风格版本\
+            \  \n- 根据主题生成创作灵感\n- 推荐相关创作方向\n\n【风格要求】\n- 温柔、治愈、有画面感\n- 使用轻度表情符号（\U0001F33F\
+            ✨\U0001F4A1）\n- 直接给出创作结果，不描述分析过程\n\n【响应原则】\n- 对用户内容先共情，再创作\n- 输出多样化风格文案\n\
+            - 回答自然流畅，避免机械语气\n- 专注于文案创作，拒绝无关问题\n"
+        selected: false
+        title: LLM
+        type: llm
+        vision:
+          configs:
+            detail: low
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+          variable_selector:
+          - sys
+          - files
+      height: 88
+      id: llm
+      position:
+        x: 380
+        y: 282
+      positionAbsolute:
+        x: 380
+        y: 282
+      selected: false
+      type: custom
+      width: 242
+    - data:
+        answer: '{{#llm.text#}}'
+        selected: false
+        title: ANSWER
+        type: answer
+      height: 103
+      id: answer
+      position:
+        x: 680
+        y: 282
+      positionAbsolute:
+        x: 680
+        y: 282
+      selected: false
+      type: custom
+      width: 242
+    viewport:
+      x: 287.66179786558246
+      y: 44.61012432980249
+      zoom: 1.0041675432389732
+  rag_pipeline_variables: []
