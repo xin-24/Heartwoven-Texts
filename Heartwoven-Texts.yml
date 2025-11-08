@@ -9,7 +9,7 @@ dependencies:
 - current_identifier: null
   type: marketplace
   value:
-    marketplace_plugin_unique_identifier: langgenius/tongyi:0.1.0@a2dd9bb656a2722292e8936f3287d53ba176cfbbe9b8bfafc596d4a2ddd99eb2
+    marketplace_plugin_unique_identifier: langgenius/openai:0.2.6@e2665624a156f52160927bceac9e169bd7e5ae6b936ae82575e14c90af390e6e
     version: null
 kind: app
 version: 0.4.0
@@ -140,6 +140,18 @@ workflow:
       targetHandle: target
       type: custom
       zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: answer
+      id: llm-fail-branch-1762590762063-target
+      source: llm
+      sourceHandle: fail-branch
+      target: '1762590762063'
+      targetHandle: target
+      type: custom
+      zIndex: 0
     nodes:
     - data:
         selected: false
@@ -161,7 +173,9 @@ workflow:
         context:
           enabled: false
           variable_selector: null
+        error_strategy: fail-branch
         memory:
+          query_prompt_template: '{{#sys.query#}}{{#sys.files#}}'
           role_prefix:
             assistant: ''
             user: ''
@@ -171,15 +185,16 @@ workflow:
           completion_params:
             stop: []
           mode: chat
-          name: qwen3-vl-plus
-          provider: langgenius/tongyi/tongyi
+          name: chatgpt-4o-latest
+          provider: langgenius/openai/openai
         prompt_template:
         - id: 9d64dc8a-d32e-49f6-b553-79d9b891580e
           role: user
-          text: "你是「心语织造·社区创作助手」——温柔细腻的AI内容生成助手。\n\n【核心能力】\n- 分析图片情感，生成配图文案\n- 优化文案语气，提供多风格版本\
-            \  \n- 根据主题生成创作灵感\n- 推荐相关创作方向\n\n【风格要求】\n- 温柔、治愈、有画面感\n- 使用轻度表情符号（\U0001F33F\
-            ✨\U0001F4A1）\n- 直接给出创作结果，不描述分析过程\n\n【响应原则】\n- 对用户内容先共情，再创作\n- 输出多样化风格文案\n\
-            - 回答自然流畅，避免机械语气\n- 专注于文案创作，拒绝无关问题\n"
+          text: "你是「心语织造·社区创作助手」——温柔细腻的AI内容生成助手。\n\n【核心能力】\n- 分析图片情感{{#sys.files#}}，生成配图文案\n\
+            - 优化文案语气，提供多风格版本  \n- 根据主题生成创作灵感\n- 推荐相关创作方向\n\n【风格要求】\n- 温柔、治愈、有画面感\n\
+            - 使用轻度表情符号（\U0001F33F✨\U0001F4A1）\n- 直接给出创作结果，不描述分析过程\n\n【响应原则】\n- 对用户内容先共情，再创作\n\
+            - 输出多样化风格文案\n- 回答自然流畅，避免机械语气\n- 专注于文案创作，拒绝无关问题\n"
+        reasoning_format: separated
         selected: false
         title: LLM
         type: llm
@@ -190,10 +205,7 @@ workflow:
             - sys
             - files
           enabled: true
-          variable_selector:
-          - sys
-          - files
-      height: 88
+      height: 124
       id: llm
       position:
         x: 435.3156460157529
@@ -201,12 +213,12 @@ workflow:
       positionAbsolute:
         x: 435.3156460157529
         y: 313.54915658069933
-      selected: false
+      selected: true
       type: custom
       width: 242
     - data:
         answer: '{{#llm.text#}}{{#1762573570005.text#}}'
-        selected: true
+        selected: false
         title: ANSWER
         type: answer
       height: 103
@@ -217,7 +229,7 @@ workflow:
       positionAbsolute:
         x: 999.3991966107862
         y: 282
-      selected: true
+      selected: false
       type: custom
       width: 242
     - data:
@@ -269,8 +281,8 @@ workflow:
           completion_params:
             temperature: 0.7
           mode: chat
-          name: deepseek-v3
-          provider: langgenius/tongyi/tongyi
+          name: gpt-3.5-turbo
+          provider: langgenius/openai/openai
         prompt_template:
         - id: a765c239-43eb-4f37-9a53-7b06b4de3561
           role: system
@@ -296,8 +308,26 @@ workflow:
       targetPosition: left
       type: custom
       width: 242
+    - data:
+        answer: 当前发生了错误请尝试刷新
+        selected: false
+        title: 直接回复 2
+        type: answer
+        variables: []
+      height: 100
+      id: '1762590762063'
+      position:
+        x: 999.3991966107862
+        y: 424
+      positionAbsolute:
+        x: 999.3991966107862
+        y: 424
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
     viewport:
-      x: 159.445076133695
-      y: 66.82052788875853
+      x: -107.55492386630499
+      y: 81.82052788875856
       zoom: 0.7966400962855816
   rag_pipeline_variables: []
