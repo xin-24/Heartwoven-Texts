@@ -1,7 +1,7 @@
 ## 心语织造·社区创作助手 - 项目介绍
 
 ### 🔗 **测试链接**
-- https://udify.app/chat/zuxMBSKvCWSB77jP
+- https://udify.app/chat/OfsgFJvPmmjGYlhF
 
 ### 🎯 **项目功能**
 - **多模态内容生成**：支持图片+文案双输入，AI自动生成优化后的创作内容
